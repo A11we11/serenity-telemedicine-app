@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Header } from "./header";
-import { Sidebar } from "./sidebar";
+import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 
 interface LayoutProps {
