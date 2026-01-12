@@ -1,5 +1,4 @@
-// src/components/offline-indicator.tsx
-import { useOfflineStore } from "../store/index";
+import { useOfflineStore } from "@/store/index";
 import { WifiOff, Wifi } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
