@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import * as express from 'express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +26,36 @@ async function bootstrap() {
     }),
   );
 
+  // Swagger setup
+  const config = new DocumentBuilder()
+    .setTitle('Serenity Telemedicine API')
+    .setDescription('API documentation for Serenity telemedicine platform')
+    .setVersion('1.0')
+    .addTag('auth', 'Authentication endpoints')
+    .addTag('consultations', 'Consultation management')
+    .addTag('messages', 'Messaging system')
+    .addTag('photos', 'Photo management and comparison')
+    .addTag('notifications', 'Notification system')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Enter JWT token',
+        in: 'header',
+      },
+      'JWT-auth',
+    )
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  });
+
   //Global prefix
   app.setGlobalPrefix('api');
 
@@ -35,6 +66,9 @@ async function bootstrap() {
   const port = configService.get('PORT') || 3000;
   await app.listen(port);
 
+  console.log(
+    `📚 Swagger docs available at: http://localhost:${port}/api/docs`,
+  );
   console.log(`🚀 Server is running on: http://localhost:${port}`);
   console.log(`📚 API docs available at: http://localhost:${port}/api`);
 
