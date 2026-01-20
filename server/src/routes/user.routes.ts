@@ -1,5 +1,9 @@
 import { prisma } from "../config/database";
+import { authenticate } from "../middleware/auth.middleware";
+import { validate } from "../middleware/validation.middleware";
+import { successResponse } from "../utils/response.util";
 import { updateProfileSchema } from "../validations/user.validation";
+import { Request, Response, NextFunction, Router } from "express";
 
 const router = Router();
 
@@ -7,7 +11,7 @@ router.patch(
   "/profile",
   authenticate,
   validate(updateProfileSchema),
-  async (req, res, next) => {
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user = await prisma.user.update({
         where: { id: req.user!.id },

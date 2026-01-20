@@ -1,6 +1,5 @@
 import z from "zod";
 
-// validations/message.validation.ts
 export const createMessageSchema = z.object({
   body: z.object({
     consultationId: z.string().cuid("Invalid consultation ID"),

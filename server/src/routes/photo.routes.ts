@@ -1,5 +1,7 @@
 import multer from "multer";
 import { PhotoController } from "../controllers/photo.controller";
+import { Router } from "express";
+import { authenticate } from "../middleware/auth.middleware";
 
 const router = Router();
 const photoController = new PhotoController();

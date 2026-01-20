@@ -1,3 +1,4 @@
+import { prisma } from "../config/database";
 import type { CreateConsultationInput } from "../validations/consultation.validation";
 
 export class ConsultationService {

@@ -4,6 +4,8 @@ import {
   updateConsultationSchema,
 } from "../validations/consultation.validation";
 import { authenticate, authorize } from "../middleware/auth.middleware";
+import { Router } from "express";
+import { validate } from "../middleware/validation.middleware";
 
 const router = Router();
 const consultationController = new ConsultationController();

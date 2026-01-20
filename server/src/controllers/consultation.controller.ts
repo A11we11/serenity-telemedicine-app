@@ -1,9 +1,15 @@
 import { ConsultationService } from "../services/consultation.service";
 import { NotificationService } from "../services/notification.service";
 import type { AuthRequest } from "../middleware/auth.middleware";
-
+import { successResponse, errorResponse } from "../utils/response.util";
+import { Request, Response, NextFunction } from "express";
 const consultationService = new ConsultationService();
 const notificationService = new NotificationService();
+
+// Helper to ensure string param
+const getParamAsString = (param: string | string[]): string => {
+  return Array.isArray(param) ? param[0] : param;
+};
 
 export class ConsultationController {
   async create(req: AuthRequest, res: Response, next: NextFunction) {
@@ -31,8 +37,12 @@ export class ConsultationController {
 
   async getById(req: AuthRequest, res: Response, next: NextFunction) {
     try {
+      /*   const id = Array.isArray(req.params.id)
+        ? req.params.id[0]
+        : req.params.id; */
       const consultation = await consultationService.getById(
-        req.params.id,
+        /* req.params.id, */
+        getParamAsString(req.params.id),
         req.user!.id,
         req.user!.role,
       );
@@ -64,8 +74,12 @@ export class ConsultationController {
 
   async update(req: AuthRequest, res: Response, next: NextFunction) {
     try {
+      /*  const id = Array.isArray(req.params.id)
+        ? req.params.id[0]
+        : req.params.id; */
       const consultation = await consultationService.update(
-        req.params.id,
+        /* req.params.id, */
+        getParamAsString(req.params.id),
         req.body,
       );
 

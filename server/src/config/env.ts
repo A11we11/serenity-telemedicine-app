@@ -39,8 +39,11 @@ const parseEnv = (): Env => {
     return envSchema.parse(process.env);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const missingVars = error.errors.map(
+      /*  const missingVars = error.errors.map(
         (e) => `${e.path.join(".")}: ${e.message}`,
+      ); */
+      const missingVars = error.issues.map(
+        (e: z.ZodIssue) => `${e.path.join(".")}: ${e.message}`,
       );
       throw new Error(
         `Environment validation failed:\n${missingVars.join("\n")}`,

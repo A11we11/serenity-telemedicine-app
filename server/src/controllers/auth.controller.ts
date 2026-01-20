@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { AuthService } from "../services/auth.service";
 import { successResponse, errorResponse } from "../utils/response.util";
+import { prisma } from "../config/database";
 
 const authService = new AuthService();
 

@@ -1,5 +1,10 @@
 // controllers/photo.controller.ts
+import { NextFunction, Response } from "express";
+import { prisma } from "../config/database";
+import { AuthRequest } from "../middleware/auth.middleware";
 import { StorageService } from "../services/storage.service";
+import { errorResponse, successResponse } from "../utils/response.util";
+import { getParamAsString } from "../utils/param.util";
 
 const storageService = new StorageService();
 
@@ -33,7 +38,7 @@ export class PhotoController {
   async list(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const photos = await prisma.photo.findMany({
-        where: { consultationId: req.params.consultationId },
+        where: { consultationId: getParamAsString(req.params.consultationId) },
         orderBy: { takenAt: "desc" },
       });
 

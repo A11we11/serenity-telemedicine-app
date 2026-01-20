@@ -1,3 +1,13 @@
+import { Request, Response, NextFunction } from "express";
+import { AuthRequest } from "../middleware/auth.middleware";
+import { prisma } from "../config/database";
+import { NotificationService } from "../services/notification.service";
+import { successResponse } from "../utils/response.util";
+import { getParamAsString } from "../utils/param.util";
+
+// Create instance of NotificationService
+const notificationService = new NotificationService();
+
 export class MessageController {
   async create(req: AuthRequest, res: Response, next: NextFunction) {
     try {
@@ -63,7 +73,7 @@ export class MessageController {
   async list(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const messages = await prisma.message.findMany({
-        where: { consultationId: req.params.consultationId },
+        where: { consultationId: getParamAsString(req.params.consultationId) },
         include: {
           sender: {
             select: {
