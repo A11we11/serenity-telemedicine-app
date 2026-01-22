@@ -49,7 +49,7 @@ app.use("/api/photos", photoRoutes);
 app.use("/api/users", userRoutes);
 
 // 404 handler
-app.use("*", (req, res) => {
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: "Route not found",

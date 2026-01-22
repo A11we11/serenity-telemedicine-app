@@ -5,7 +5,7 @@ export const createMessageSchema = z.object({
     consultationId: z.string().cuid("Invalid consultation ID"),
     type: z.enum(["TEXT", "VIDEO", "IMAGE", "SYSTEM"]).default("TEXT"),
     content: z.string().min(1, "Message content is required"),
-    metadata: z.record(z.any()).optional(),
+    metadata: z.record(z.string(), z.any()).optional(),
   }),
 });
 
