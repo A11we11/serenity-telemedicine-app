@@ -135,7 +135,7 @@ export function ConsultationDetail({
       <Card>
         <CardContent className="p-0">
           <div
-            className="h-[500px] overflow-y-auto p-4 space-y-4 scrollbar-thin"
+            className="h-125 overflow-y-auto p-4 space-y-4 scrollbar-thin"
             role="log"
             aria-label={t("consultationMessages")}
           >

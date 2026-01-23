@@ -26,9 +26,16 @@ export const registerSchema = z
       .regex(/[a-z]/, "Password must contain at least one lowercase letter")
       .regex(/[0-9]/, "Password must contain at least one number"),
     confirmPassword: z.string().min(1, "Please confirm your password"),
-    role: z.enum(["patient", "doctor"], {
+    role: z
+      .string()
+      .min(1, "Please select a role")
+      .refine((val) => val === "patient" || val === "doctor", {
+        message: "Invalid role selected",
+      }),
+
+    /*  role: z.enum(["patient", "doctor"],{
       required_error: "Please select a role",
-    }),
+    }), */
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
