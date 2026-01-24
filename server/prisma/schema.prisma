@@ -1,12 +1,9 @@
 generator client {
   provider = "prisma-client-js"
-   
 }
 
 datasource db {
   provider = "postgresql"
-   
-
 }
 
 enum UserRole {
@@ -30,6 +27,21 @@ enum MessageType {
   SYSTEM
 }
 
+
+enum NotificationType {
+  sms
+  whatsapp
+  email
+}
+
+enum NotificationStatus {
+  pending
+  sent
+  failed
+}
+
+
+
 model User {
   id                String   @id @default(cuid())
   email             String   @unique
@@ -48,6 +60,7 @@ model User {
   doctorConsultations  Consultation[] @relation("DoctorConsultations")
   messages             Message[]
   photos               Photo[]
+  
 
   @@map("users")
 }

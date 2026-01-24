@@ -5,9 +5,13 @@ import { persist } from "zustand/middleware";
 interface User {
   id: string;
   email: string;
-  role: "patient" | "doctor";
-  name: string;
-  avatar?: string;
+  role: "PATIENT" | "DOCTOR" | "ADMIN";
+  firstName: string;
+  lastName: string;
+  phone?: string;
+  language: string;
+  notificationPrefs?: any;
+  createdAt?: string;
 }
 
 interface AuthState {
@@ -27,8 +31,8 @@ export const useAuthStore = create<AuthState>()(
       setAuth: (user, token) => set({ user, token, isAuthenticated: true }),
       logout: () => set({ user: null, token: null, isAuthenticated: false }),
     }),
-    { name: "auth-storage" }
-  )
+    { name: "auth-storage" },
+  ),
 );
 
 // Theme Store
@@ -46,8 +50,8 @@ export const useThemeStore = create<ThemeState>()(
         set((state) => ({ theme: state.theme === "light" ? "dark" : "light" })),
       setTheme: (theme) => set({ theme }),
     }),
-    { name: "theme-storage" }
-  )
+    { name: "theme-storage" },
+  ),
 );
 
 // Offline Queue Store
@@ -87,8 +91,8 @@ export const useOfflineStore = create<OfflineState>()(
         })),
       clearQueue: () => set({ queue: [] }),
     }),
-    { name: "offline-storage" }
-  )
+    { name: "offline-storage" },
+  ),
 );
 
 // Language Store
@@ -103,8 +107,8 @@ export const useLanguageStore = create<LanguageState>()(
       language: "en",
       setLanguage: (language) => set({ language }),
     }),
-    { name: "language-storage" }
-  )
+    { name: "language-storage" },
+  ),
 );
 
 // Consultation Store (for local state management)
@@ -130,7 +134,7 @@ export const useConsultationStore = create<ConsultationState>((set) => ({
   updateConsultation: (id, data) =>
     set((state) => ({
       consultations: state.consultations.map((c) =>
-        c.id === id ? { ...c, ...data } : c
+        c.id === id ? { ...c, ...data } : c,
       ),
     })),
 }));

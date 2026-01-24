@@ -13,9 +13,12 @@ export const consultationSchema = z.object({
     .string()
     .min(1, "Please specify how long you have had these symptoms"),
 
-  severity: z.enum(["mild", "moderate", "severe"], {
-    required_error: "Please rate the severity",
-  }),
+  severity: z
+    .string()
+    .min(1, "Please rate the severity")
+    .refine((val) => ["mild", "moderate", "severe"].includes(val), {
+      message: "Invalid severity value",
+    }),
 
   medicalHistory: z.string().optional(),
 
@@ -29,14 +32,17 @@ export const consultationSchema = z.object({
         file: z.instanceof(File),
         preview: z.string(),
         description: z.string().optional(),
-      })
+      }),
     )
     .max(5, "You can upload a maximum of 5 photos")
     .optional(),
 
-  preferredContactMethod: z.enum(["sms", "whatsapp", "email"], {
-    required_error: "Please select a contact method",
-  }),
+  preferredContactMethod: z
+    .string()
+    .min(1, "Please select a contact method")
+    .refine((val) => ["sms", "whatsapp", "email"].includes(val), {
+      message: "Invalid contact method",
+    }),
 
   phoneNumber: z
     .string()

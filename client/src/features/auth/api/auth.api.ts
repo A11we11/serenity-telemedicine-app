@@ -6,28 +6,31 @@ export interface LoginCredentials {
 }
 
 export interface RegisterData extends LoginCredentials {
-  name: string;
-  role: "patient" | "doctor";
+  firstName: string;
+  lastName: string;
+  role: "PATIENT" | "DOCTOR";
+  phone?: string;
+  language?: string;
 }
 
 export const authApi = {
   login: async (credentials: LoginCredentials) => {
     const response = await api.post("/auth/login", credentials);
-    return response.data;
+    return response.data.data;
   },
 
   register: async (data: RegisterData) => {
     const response = await api.post("/auth/register", data);
-    return response.data;
+    return response.data.data;
   },
 
   me: async () => {
-    const response = await api.get("/auth/me");
-    return response.data;
+    const response = await api.get("/auth/profile");
+    return response.data.data;
   },
 
   logout: async () => {
     const response = await api.post("/auth/logout");
-    return response.data;
+    return response.data.data;
   },
 };
