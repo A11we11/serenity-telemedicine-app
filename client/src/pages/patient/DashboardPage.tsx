@@ -17,7 +17,7 @@ export function PatientDashboard() {
       {/* Welcome Header */}
       <div>
         <h1 className="text-3xl font-bold">
-          {t("welcomeBack")}, {user?.name}
+          {t("welcomeBack")}, {user?.firstName}
         </h1>
         <p className="text-muted-foreground mt-1">{t("yourHealthDashboard")}</p>
       </div>
